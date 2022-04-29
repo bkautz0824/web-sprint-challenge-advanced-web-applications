@@ -4,11 +4,18 @@ import PT from 'prop-types'
 
 export default function Articles(props) {
   // ✨ where are my props? Destructure them here
-
+  const [articles, setArticles] = useState([])
   // ✨ implement conditional logic: if no token exists
   // we should render a Navigate to login screen (React Router v.6)
 
   useEffect(() => {
+    .axiosWithAuth()
+    .get('http://localhost:9000/api/article')
+    .then(res) => {
+      console.log(res)
+      setArticles(res.data)
+    }
+    .catch(err => console.log(err))
     // ✨ grab the articles here, on first render only
   })
 

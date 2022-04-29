@@ -1,13 +1,15 @@
 import React, { useState } from 'react'
 import PT from 'prop-types'
+import { useHistory } from 'react-router-dom'
 
 const initialFormValues = {
   username: '',
   password: '',
 }
 export default function LoginForm(props) {
-  const [values, setValues] = useState(initialFormValues)
+  const [values, setValues] = useState({username:"", password: ""})
   // ✨ where are my props? Destructure them here
+  const { push } = useHistory()
 
   const onChange = evt => {
     const { id, value } = evt.target
@@ -16,6 +18,14 @@ export default function LoginForm(props) {
 
   const onSubmit = evt => {
     evt.preventDefault()
+    axios.post('http://localhost:9000/api/login', value)
+    .then(res => {
+      console.log(res)
+      localStorage.setItem('token', res.data.payload)
+    })
+    .catch(err => {
+      console.log({err})
+    })
     // ✨ implement
   }
 

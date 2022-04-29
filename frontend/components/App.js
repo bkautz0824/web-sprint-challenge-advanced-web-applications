@@ -63,6 +63,11 @@ export default function App() {
 
   const deleteArticle = article_id => {
     // ✨ implement
+    axiosWithAuth().delete(`/article-id/${article_id}`)
+    .then((res) => {
+      
+    })
+    .catch((err) => onsole.log({err}))
   }
 
   return (
