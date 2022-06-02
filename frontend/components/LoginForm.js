@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useHistory } from 'react'
 import PT from 'prop-types'
-import { useHistory } from 'react-router-dom'
+
+
 
 const initialFormValues = {
   username: '',
@@ -9,7 +10,12 @@ const initialFormValues = {
 export default function LoginForm(props) {
   const [values, setValues] = useState({username:"", password: ""})
   // ✨ where are my props? Destructure them here
-  const { push } = useHistory()
+  const { login } = props
+  console.log(props)
+  
+  
+  
+  // const { props }  = useHistory()
 
   const onChange = evt => {
     const { id, value } = evt.target
@@ -18,19 +24,22 @@ export default function LoginForm(props) {
 
   const onSubmit = evt => {
     evt.preventDefault()
-    axios.post('http://localhost:9000/api/login', value)
-    .then(res => {
-      console.log(res)
-      localStorage.setItem('token', res.data.payload)
-    })
-    .catch(err => {
-      console.log({err})
-    })
+    login(values)
+
     // ✨ implement
   }
 
   const isDisabled = () => {
     // ✨ implement
+    
+    
+    if(values.username.trim().length >= 3 && values.password.trim().length >= 8){
+      return false;
+    }else{
+      return true
+    }
+
+       
     // Trimmed username must be >= 3, and
     // trimmed password must be >= 8 for
     // the button to become enabled
